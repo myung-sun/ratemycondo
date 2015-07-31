@@ -1,0 +1,72 @@
+
+<!-- background main image -->
+<!-- <img src="main.jpg" id="main-img"> -->
+
+<p id="notice"><%= notice %></p>
+
+<h1 class="listing">Advanced search</h1>
+
+
+<!= Implements search feature using gem "Ransack" =>
+<p class="listing1"><%= link_to 'Simple Search', links_path %></p>
+<%= search_form_for @q, url: advanced_search_links_path,
+                        html: { method: :post } do |f| %>
+  <%= f.condition_fields do |c| %>
+  <div  class="listing1">
+    <div class="large-4 small-4 columns">
+		<%= c.attribute_fields do |a| %>
+        	<%= a.attribute_select nil, class: "radius" %>
+      	<% end %>
+    </div>
+    <div class="large-4 small-4 columns">
+    	<%= c.predicate_select Hash.new, class: "radius" %>
+    </div>
+    <div class="large-4 small-4 columns">
+      	<%= c.value_fields do |v| %>
+        <%= v.text_field :value, class: "radius" %>
+     	<% end %>
+    </div>
+  	<% end %>
+  
+  	<h5>Sort</h5>
+  	<div class="column">
+  	<%= f.sort_fields do |s| %>
+    	<%= s.sort_select Hash.new, class: "large-5 small-4 columns mrs radius" %>
+  	<% end %>
+  	</div>
+	<%= f.submit "Search", class: "radius button" %>
+<% end %>
+
+
+
+<!= Implements sorting attributes using gem "Ransack" =>
+  <table>
+    <thead>
+      <tr>
+        <th><%= sort_link @q, :name, "Name" %></th>
+        <th><%= sort_link @q, :address, "Address" %></th>
+        <th>availability</th>
+        <th>like</th>
+        <th>dislike</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <% @links.each do |link| %>
+      <tr>
+        <h2>
+          <td><%= link_to link.name, link %><br></td>
+          <td><%= link_to link.address, link %><br></td>
+          <td><%= link_to link.bedroom, link %><br></td>
+          <td><%= link.get_upvotes.size %></td>
+          <td><%= link.get_downvotes.size %></td>
+        </h2>
+      </tr>
+    </tbody>
+
+    
+  <% end %>
+  </table>
+
+

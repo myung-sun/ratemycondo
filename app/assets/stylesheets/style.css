@@ -1,0 +1,93 @@
+/************* links/index css ******************/
+
+.logo {
+	text-align: center;
+}
+
+#mainpage {
+    background-image: url("main.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 500px;
+}
+
+#mainpage-searchbar{
+	text-align: center;
+    color: orange;
+}
+
+#main-img{
+	width: 100%;
+}
+
+#content-470 {
+}
+
+#link-index {/*
+	margin-top: -50%;
+	text-align: center;*/
+}
+
+/************* links/show css ******************/
+.apt-name {
+	color: #00CCFF;
+	text-align: center;
+	margin-bottom: 5%;
+}
+
+#rate-button {
+	color: red;
+	width: 200%;
+}
+
+.apt-placeholder{
+}
+
+#apt-factsheet {
+	float: left;
+	margin-left: 10%;
+}
+
+#apt-map {
+	float: right;
+	margin-right: 10%;
+}
+
+#apt-comments {
+	margin-top: 30%;
+	float: left;
+}
+
+/************* links/new css ******************/
+h1.listing{
+	color: #00CCFF;
+	text-align: center;
+	margin-bottom: 5%;
+}
+.listing1{
+	margin-left: 10%
+}
+.wrap {
+	width: 100%;
+}
+
+.field, .field2{
+	margin-left: 10%;
+	float: left;
+	margin-bottom: 5%;
+}
+.field2 {
+	float: right;
+	margin-right: 30%;
+}
+
+.add_info {
+	font-size: 20px;
+}
+
+.actions {
+	margin-left: 10%;
+}
+.back1 {
+	margin-left: 10%;
+}

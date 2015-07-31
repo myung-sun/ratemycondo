@@ -1,56 +1,70 @@
 <p id="notice"><%= notice %></p>
+  
+<h1 class="apt-name"><%= @link.name %></h1>
 
-<p>
-  <strong>Name:</strong>
-  <%= @link.name %>
-</p>
+<div class="apt-placeholder">
+  <div id="apt-factsheet">
+    <%= button_to "Rate this condo", new_comment_path, :id=> "rate-button", :class => "button", :method => :get  %><br />
 
-<p>
-  <strong>Address:</strong>
-  <%= @link.address %>
-</p>
+    <%= link_to 'Edit', edit_link_path(@link) %> |
+    <%= link_to 'Back', links_path %>
 
-<p>
-  <strong>Availability:</strong>
-  <%= @link.bedroom %>
-</p>
-<%= link_to 'Edit', edit_link_path(@link) %> |
-<%= link_to 'Back', links_path %>
+    <div class="btn-group">
+      <%= link_to like_link_path(@link), method: :put, class: "btn btn-default btn-sm" do %>
+      <span class="glyphicon glyphicon-chevron-up"></span>
+      Upvote
 
-<div class="btn-group">
-      
-  <%= link_to like_link_path(@link), method: :put, class: "btn btn-default btn-sm" do %>
-    <span class="glyphicon glyphicon-chevron-up"></span>
-    Upvote
-    
-  <% end %>
-  <%= link_to dislike_link_path(@link), method: :put, class: "btn btn-default btn-sm" do %>
-    <span class="glyphicon glyphicon-chevron-down">
-    Downvote
-    
-  <% end %>
-</div>
+      <% end %>
+      <%= link_to dislike_link_path(@link), method: :put, class: "btn btn-default btn-sm" do %>
+      <span class="glyphicon glyphicon-chevron-down">
+      Downvote
 
-<p>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+      <% end %>
+    </div>
 
+    <p class="apt-attr">
+      <strong>Address:</strong>
+      <%= @link.address %>
+    </p>
 
-<h3 class="comments_title">
-  <%= @link.comments.count %> Comments
-</h3>
+    <p class="apt-attr">
+      <strong>Availability:</strong>
+      <%= @link.bedroom %>
+    </p>
 
-<div id="comments">
-  <%= render :partial => @link.comments %>
-</div>
+    <p class="apt-attr">
+      <strong>Built:</strong>
+      <%= @link.built %>
+    </p>
 
-<%= simple_form_for [@link, Comment.new] do |f| %>
-  <div class="field">
-    <%= f.text_area :body, class: "form-control" %>
+    <p class="apt-attr">
+      <strong>Floors:</strong>
+      <%= @link.floors %>
+    </p>
+
+    <p class="apt-attr">
+      <strong>Suites:</strong>
+      <%= @link.suites %>
+    </p>
+
+    <p class="apt-attr">
+      <strong>Features:</strong>
+      <%= @link.amenities %>
+    </p>
   </div>
-  <br>
 
-  <% if user_signed_in? %>
-    <%= f.submit "Add Comment", class: "btn btn-primary" %>
-  <% else %>
-    <%= link_to 'Add Comments', new_user_session_path %>
-  <% end %>
-<% end %>
+  <!-- Google map -->
+  <div id="apt-map">
+    <%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@link.latitude}%2C#{@link.longitude}" %>
+  </div>
+
+  <div id="apt-comments">
+    <h3 class="comments_title">
+      <%= @link.comments.count %> Comments
+    </h3>
+
+    <div id="comments">
+      <%= render :partial => @link.comments %>
+    </div>
+  </div>
+</div>

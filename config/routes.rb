@@ -1,12 +1,31 @@
 Rails.application.routes.draw do
   resources :comments
-  devise_for :users
-  resources :links
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  resources :links do
+    collection do
+    match 'advanced_search' => 'links#advanced_search', via: [:get, :post], as: :advanced_search
+    end
+    member do
+        put "like", to: "links#upvote"
+        put "dislike", to: "links#downvote"
+# do sth here
+    end
+    resources :comments
+
+  end
+    
+    
+
+
+
+
+  #get "/auth/:action/callback", :to => "links", :constraints => { :action => /facebook/ }
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'links#index'
+  root 'links#welcome'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -30,14 +49,6 @@ Rails.application.routes.draw do
   #   end
 
 # add routes for comments
-  resources :links do
-    member do
-        put "like", to: "links#upvote"
-        put "dislike", to: "links#downvote"
-# do sth here
-    end
-    resources :comments
-  end
 
   # Example resource route with sub-resources:
   #   resources :products do

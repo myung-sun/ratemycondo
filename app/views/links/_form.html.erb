@@ -10,29 +10,47 @@
       </ul>
     </div>
   <% end %>
+  <div class="wrap">
+    <div class="field">
+      <%= f.label :name , :class => "add_info"%><br>
+      <%= f.text_field :name %><br><br>
+    
+      <%= f.label :address , :class => "add_info" %><br>
+      <%= f.text_field :address %><br><br>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+      <%= f.label :built , :class => "add_info" %><br>
+      <%= f.text_field :built %><br><br>
+    
+      <%= f.label :floors , :class => "add_info"%><br>
+      <%= f.text_field :floors %><br><br>
+ 
+      <%= f.label :suites , :class => "add_info" %><br>
+      <%= f.text_field :suites %><br>
+    </div>
+
+    <div class="field2">
+      <%= f.label :bedroom , :class => "add_info" %><br>
+      <%= check_box_tag 'link[bedroom][]', "studio"%>
+      <%= f.label :bedroom, 'Studio'  %><br>
+      <%= check_box_tag 'link[bedroom][]', "1bdr"%>
+      <%= f.label :bedroom, '1 Bedroom' %><br>
+      <%= check_box_tag 'link[bedroom][]', "2bdr"%>
+      <%= f.label :bedroom, '2 Bedroom'%><br>
+      <%= check_box_tag 'link[bedroom][]', "3bdr"%>  
+      <%= f.label :bedroom, '3 Bedroom' %><br><br>
+  
+      <%= f.label :amenities , :class => "add_info" %><br>
+      <%= check_box_tag 'link[amenities][]', "gym"%>
+      <%= f.label :amenities, 'Gym'  %><br>
+      <%= check_box_tag 'link[amenities][]', "pool"%>
+      <%= f.label :amenities, 'Pool' %><br>
+      <%= check_box_tag 'link[amenities][]', "sauna"%>
+      <%= f.label :amenities, 'Sauna'%><br>
+      <%= check_box_tag 'link[amenities][]', "hottub"%>   
+      <%= f.label :amenities, 'Hottub' %><br>
+    </div>
+    <div style="clear: both;">
   </div>
-
-  <div class="field">
-    <%= f.label :address %><br>
-    <%= f.text_field :address %>
-  </div>
-
-  <div class="field">
-    <%= f.label :bedroom %><br>
-    <%= check_box_tag 'link[bedroom][]', "studio"%>
-    <%= f.label :bedroom, 'Studio'  %><br>
-    <%= check_box_tag 'link[bedroom][]', "1bdr"%>
-    <%= f.label :bedroom, '1 Bedroom' %><br>
-    <%= check_box_tag 'link[bedroom][]', "2bdr"%>
-    <%= f.label :bedroom, '2 Bedroom'%><br>
-    <%= check_box_tag 'link[bedroom][]', "3bdr"%>   
-    <%= f.label :bedroom, '3 Bedroom' %><br>
-  </div>
-
   <div class="actions">
     <%= f.submit %>
   </div>

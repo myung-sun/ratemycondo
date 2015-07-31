@@ -7,13 +7,27 @@ class LinksController < ApplicationController
 
   # GET /links
   # GET /links.json
+  def welcome
+    #links = Link.all
+    #if params[:search]
+     # @links = Link.search(params[:search])#.order("created_at DESC")
+    #else
+     # @links = Link.all#.order('created_at DESC')
+    #end
+    @q = Link.ransack(params[:q])
+    @links = @q.result(distinct: true)
+  end
+
   def index
-    @links = Link.all
-    if params[:search]
-      @links = Link.search(params[:search])#.order("created_at DESC")
-    else
-      @links = Link.all#.order('created_at DESC')
-    end
+    @q = Link.ransack(params[:q])
+    @links = @q.result(distinct: true)
+  end
+
+  def advanced_search
+    @q = Link.ransack(params[:q])
+    @links = @q.result(distinct: true)
+    @q.build_condition
+    @q.build_sort
   end
 
   # GET /links/1
@@ -70,6 +84,9 @@ class LinksController < ApplicationController
     end
   end
 
+  def rate
+  end
+
   def upvote
     @link = Link.find(params[:id])
     @link.upvote_by current_user
@@ -81,7 +98,6 @@ class LinksController < ApplicationController
     @link.downvote_by current_user
     redirect_to :back
   end  
-
 
   private
 
@@ -98,11 +114,7 @@ class LinksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def link_params
-      params.require(:link).permit(:name, :address,:bedroom => [])
+      params.require(:link).permit(:name, :address, :built, :floors, :suites, :bedroom => [], :amenities => [])
     end
-
-    
-
-
 
 end

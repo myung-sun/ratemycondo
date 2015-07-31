@@ -3,6 +3,8 @@ class Link < ActiveRecord::Base
     belongs_to :user
     has_many :comments
 
+    geocoded_by :address
+	after_validation :geocode, :if => :address_changed?
 
     def self.search(search)
     	where('name ILIKE ? OR address ILIKE ?', "%#{search}%", "%#{search}%")

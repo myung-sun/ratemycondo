@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-
+gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 # Use postgresql as the database for Active Record
@@ -39,12 +40,14 @@ gem 'autoprefixer-rails'
 #voting gem
 gem 'acts_as_votable', '~> 0.10.0'
 
-
+gem 'geocoder'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+gem 'ransack', github: 'activerecord-hackery/ransack'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

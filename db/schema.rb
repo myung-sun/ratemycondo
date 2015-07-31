@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150724235414) do
+ActiveRecord::Schema.define(version: 20150728220323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,12 @@ ActiveRecord::Schema.define(version: 20150724235414) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "user_id"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.integer  "built"
+    t.integer  "floors"
+    t.integer  "suites"
+    t.string   "amenities",  default: [],              array: true
   end
 
   add_index "links", ["user_id"], name: "index_links_on_user_id", using: :btree
@@ -51,10 +57,14 @@ ActiveRecord::Schema.define(version: 20150724235414) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "uid"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["provider"], name: "index_users_on_provider", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["uid"], name: "index_users_on_uid", using: :btree
 
   create_table "votes", force: :cascade do |t|
     t.integer  "votable_id"
