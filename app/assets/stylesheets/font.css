@@ -1,0 +1,25 @@
+@font-face {
+    font-family: mainfont;
+    src: url(font/Montserrat-Bold.otf);
+}
+@font-face {
+    font-family: subfont;
+    src: url(font/Montserrat-Regular.otf);
+}
+
+h1,h2,h3,h4,h5,h6{
+	font-family: 'mainfont', sans-serif !important;
+	text-transform: uppercase;
+}
+
+p, a{
+	font-family: 'subfont', sans-serif !important;
+	text-transform: capitalize;
+}
+
+#result_head a{
+	text-transform: uppercase;
+}
+table p{
+
+}

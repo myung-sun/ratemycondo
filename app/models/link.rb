@@ -3,12 +3,16 @@ class Link < ActiveRecord::Base
     belongs_to :user
     has_many :comments
 
-    geocoded_by :address
-	after_validation :geocode, :if => :address_changed?
+    validates :name, :presence => true
+    validates :streetaddress, :presence => true
 
-    def self.search(search)
-    	where('name ILIKE ? OR address ILIKE ?', "%#{search}%", "%#{search}%")
+    # add rating capability using ratyrate
+    ratyrate_rateable 'cleanliness', 'noise_level', 'convenience', 'custome_design'
 
-  	end
+    def full_address
+        [streetaddress, regionaladdress].compact.join(', ')
+    end
 
+    geocoded_by :full_address
+    after_validation :geocode, :if => :streetaddress_changed?
 end

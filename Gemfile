@@ -17,6 +17,7 @@ gem 'coffee-rails', '~> 4.1.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -27,8 +28,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # jin: add devise for user authentication
 gem 'devise', '~> 3.4.0' # changed version because of error
 
+gem 'rolify', '~> 4.0.0'
+
 # for the comments form
 gem 'simple_form', '~> 3.0.2'
+
+# A Ruby Gem that wrap the functionality of jQuery Raty library, and provides optional IMDB style rating.
+gem 'ratyrate'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -47,7 +53,11 @@ gem 'geocoder'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Search feature
 gem 'ransack', github: 'activerecord-hackery/ransack'
+
+# Autocomplete feature
+gem 'rails4-autocomplete'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -58,5 +68,14 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  gem "awesome_print"
+  gem "bundler-audit", require: false
+
+  # Environment Variables should be inside a file in local machine
+  # gem "dotenv-rails"
+
+  gem "pry-rails"
+
 end
 

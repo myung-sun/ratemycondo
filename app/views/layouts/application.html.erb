@@ -1,60 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Rate My Apt</title>
+  <title>Rate My Apartments</title>
     <%= stylesheet_link_tag 'application', media: 'all' %>
-
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
 </head>
 <body>
+<div id="mainpage">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="/#">
+        <%=image_tag 'logo.ico', :class => "style_logo" %>
+        <%= link_to 'Rate My Apartments', root_path, class: "navbar-brand" %>
+        </a>
+        <!-- <a class="navbar-brand" href="">Web Genie</a> -->
+      </div>
 
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <%=image_tag 'logo.ico', :class => "style_logo" %>
-      <%= link_to 'Rate My Condos', root_path, class: "navbar-brand" %>
-      <!-- <a class="navbar-brand" href="">Web Genie</a> -->
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <% if user_signed_in? %>
-          <ul>
-            <li><%= link_to 'Submit link', new_link_path %></li>
-            <li><%= link_to 'Account', edit_user_registration_path %></li>
-            <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+            <ul>
+              <% if current_user.is_admin? %> <!-- only Admin can add apartment link -->
+                <li><%= link_to 'Add Apartment', new_link_path %></li>
+              <% end %>
+              <li><%= link_to 'Account', edit_user_registration_path %></li>
+              <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
+              <li><%= link_to 'Contact us', new_contact_path %></li>
+            </ul>
+          <% else %>
+            <ul>
+              <li><%= link_to 'Sign up', new_user_registration_path %></li>
+              <li><%= link_to 'Sign in', new_user_session_path %></li>
+              <li><%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2) %></li>
+              <li><%= link_to 'Contact us', new_contact_path %></li>
           </ul>
-        <% else %>
-          <ul>
-            <li><%= link_to 'Sign up', new_user_registration_path %></li>
-            <li><%= link_to 'Sign in', new_user_session_path %></li>
-            <li><%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2) %></li>
-          </ul>
-        <% end %>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-
-<!-- <div class="container"> -->
-<div id="content-470">
-<% flash.each do |name, msg| %>
-<%= content_tag(:div, msg, class: "alert alert-#{name}") %>
-<% end %>
-
-
-
-
-<%= yield %>
+          <% end %>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <div id="bodybody">
+    <%= yield %>
+  </div>
 </div>
+
+  <% flash.each do |name, msg| %>
+    <%= content_tag :div, msg, class: "alert alert-info" %>
+  <% end %>
+
 </body>
 </html>

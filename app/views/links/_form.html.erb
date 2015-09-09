@@ -1,11 +1,11 @@
+<!-- <div class="container" id="contentcontainer"> -->
 <%= form_for(@link) do |f| %>
   <% if @link.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@link.errors.count, "error") %> prohibited this link from being saved:</h2>
 
       <ul>
       <% @link.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <li id="ListA"><%= message %></li>
       <% end %>
       </ul>
     </div>
@@ -15,8 +15,14 @@
       <%= f.label :name , :class => "add_info"%><br>
       <%= f.text_field :name %><br><br>
     
-      <%= f.label :address , :class => "add_info" %><br>
-      <%= f.text_field :address %><br><br>
+      <%= f.label :streetaddress, "Street Address", :class => "add_info" %><br>
+      <%= f.text_field :streetaddress %><br><br>
+
+      <%= f.label :regionaladdress, "Region",:class => "add_info" %><br>
+      <%= f.text_field :regionaladdress %><br><br>
+
+      <%= f.label :averageprice, "Average Price", :class => "add_info" %><br>
+      <%= f.text_field :averageprice %><br><br>      
 
       <%= f.label :built , :class => "add_info" %><br>
       <%= f.text_field :built %><br><br>
@@ -55,3 +61,4 @@
     <%= f.submit %>
   </div>
 <% end %>
+</div>

@@ -1,22 +1,23 @@
+
 Rails.application.routes.draw do
-  resources :comments
+
+  post '/rate' => 'rater#create', :as => 'rate'
+  resources :contacts
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
   resources :links do
+    get :autocomplete_link_streetaddress, :on => :collection
+    get :autocomplete_link_regionaladdress, :on => :collection
     collection do
     match 'advanced_search' => 'links#advanced_search', via: [:get, :post], as: :advanced_search
+    match 'result_page' => 'links#result_page', via: [:get, :post], as: :result_page
     end
     member do
         put "like", to: "links#upvote"
         put "dislike", to: "links#downvote"
-# do sth here
     end
     resources :comments
-
   end
-    
-    
-
-
 
 
   #get "/auth/:action/callback", :to => "links", :constraints => { :action => /facebook/ }
@@ -25,7 +26,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'links#welcome'
+  root 'links#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

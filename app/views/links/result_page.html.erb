@@ -1,0 +1,78 @@
+
+
+<!-- Implements search feature using gem "Ransack" -->
+<div id="mainpage-searchbar">
+
+
+  <!-- <!= Implements search feature using gem "Ransack" => -->
+
+<%= search_form_for @q, url: result_page_links_path, html: {method: :post, class: "search_form"} do |f| %>
+  <!--<%= f.label :name_or_address_cont, '     ' %>-->
+  <br>
+  <p><button type="button" id = "advanced_search"><%= link_to 'Do you want our recommendation?', advanced_search_links_path, {:style=>'color:black;', :class => "table_element"} %></button>
+  <%= f.autocomplete_field :name_or_streetaddress_or_regionaladdress_cont, autocomplete_link_streetaddress_links_path, :size => 100, id: 'my_autocomplete_field' %> <%= f.submit class: 'search_submit' %> </p>
+
+  
+<% end %>
+</div>
+
+<!-- <div align = "center" id="resultmain"> -->
+<div id="resultmain">
+  <table id="result_table">
+    <thead id="result_head">
+      <tr>
+        <th id='th1'>
+          <h5>
+            <%= sort_link @q, :name, "Region"%>
+          </h5>
+        </th>
+        <th id='th2'>
+          <h5>
+            <%= sort_link @q, :name, "Name"%>
+          </h5>
+        </th>
+        <th id='th3'>
+          <h5>
+            <%= sort_link @q, :averageprice, "Averageprice"%>
+          </h5>
+        </th>
+        <th id='th4'>
+          <h5>Rates</h5>
+          <!-- <h5><%= sort_link @q, :rates, "Rates"%></h5> -->
+        </th>
+        <th id='th5'>
+          <h5>Comments</h5>
+          <!-- <h5><%= sort_link @q, :comments, "Comments"%></h5>-->
+        </th>
+      </tr>
+    </thead>
+    <tbody id="result_body">
+      <% @links.each do |link| %>
+      <tr class="<%= cycle('oddrow', 'evenrow') -%>" data-link="<%= link_path(link) %>">
+        <td id='td1'><h5><%= link.regionaladdress %></h5></td>
+        <td id='td2'><h4><%= link.name %></h4><p><%= link.streetaddress %></p></td>
+        <td id='td3'><h5><%= link.averageprice %></h5></td>
+        <td id='td4'><p><%= link.get_upvotes.size %></p></td>
+        <td id='td5'><p><%= link.comments.count %><p></td>
+
+      </tr>
+
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+
+
+
+<script>
+  $(document).ready(ready);
+    $(document).on('page:load',ready);
+
+    // table row to be clickable
+    
+    jQuery(function($) {
+      $("tr[data-link]").click(function() {
+        window.location = this.dataset.link
+      });
+    })
+</script>

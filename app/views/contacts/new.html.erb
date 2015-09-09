@@ -1,0 +1,39 @@
+<div id="container-comments">
+<h1 class= "app_font">Contact us</h1>
+
+  <div>
+    <h3>Send a Message to Us</h3>
+    <br>
+    <br>
+    <%= form_for(@contact) do |f| %>
+
+
+      <%= f.label :name , :class => "add_info"%><br>
+      <%= f.text_field :name,size: 25 %><br><br>
+
+      <% if user_signed_in? %>
+      
+      <% else %>
+
+        <%= f.label :email , :class => "add_info"%><br>
+        <%= f.text_field :email, size: 25, :required => true %><br><br>
+        
+      <% end %>
+            
+        <%= f.label :message , :class => "add_info"%><br>
+        <%= f.text_field :message, size: 25, :required => true %><br><br>
+
+      <div>
+      </br>
+        <%= simple_form_for @contact, :html => {:class => 'form-horizontal' } do |f| %>
+          <%= f.button :submit, 'Send message', :class=> "btn btn-primary" %>
+        <% end %>
+        
+      </div>
+
+    <% end %>
+    <br>
+
+  <%= link_to 'Back', :back %>
+  </div>
+</div>

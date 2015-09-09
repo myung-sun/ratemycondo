@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  rolify
   has_many :links
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -13,6 +14,11 @@ class User < ActiveRecord::Base
 	#     # user.image = auth.info.image # assuming the user model has an image
 	#   end
 	# end
+
+	# Check if user has a role as :admin
+	def is_admin?
+		has_role? :admin
+	end
 
 	def self.from_omniauth(access_token)
 		data = access_token.info
@@ -35,4 +41,7 @@ class User < ActiveRecord::Base
 	#       end
 	#     end
  #  	end
+
+  	# defining the model that will do the actual rating
+  	ratyrate_rater
 end

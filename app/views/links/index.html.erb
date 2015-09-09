@@ -1,50 +1,110 @@
 <!-- background main image -->
 <!-- <img src="main.jpg" id="main-img"> -->
-
+<!-- Implements search feature using gem "Ransack" -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="jquery.quovolver.js"></script>
 <p id="notice"><%= notice %></p>
 
 
-<h1 class="listing">Listing Apartments</h1>
 
-<!= Implements search feature using gem "Ransack" =>
-<p class="listing1"><%= link_to 'Advanced Search', advanced_search_links_path %></p>
-<div class="listing1">
-  <%= search_form_for @q do |f| %>
-    <%= f.label :name_or_address_cont %>
-    <%= f.search_field :name_or_address_cont %>
-    <%= f.submit %>
-</div>
+<div class="outer">
+
+<div class="middle">
+
+  <div class="quotes">
+      <blockquote>
+        <p>Find out more about your <br>Apartment</p>
+    </blockquote>
+      <blockquote>
+        <p>Talk more about your  <br>  Apartment</p>
+    </blockquote>
+
+	<h1 class="quotes">Find out more about your <br>Apartment</h1>
+<!-- <h1 class="quotes">Talk more about your  <br>  Apartment</h1> -->
+
+<div class="inner">
+<div id="mainpage-searchbar">
+
+  <!-- <!= Implements search feature using gem "Ransack" => -->
+
+<%= search_form_for @q, url: result_page_links_path, html: {method: :post, class: "search_form"} do |f| %>
+  <!--<%= f.label :name_or_address_cont, '     ' %>-->
+  <br>
+  <p>
+    <button type="button" id = "advanced_search"><%= link_to 'Do you want our recommendations?', advanced_search_links_path, {:style=>'color:black;', :class => "table_element"}%></button>
+    <%= f.autocomplete_field :name_or_streetaddress_or_regionaladdress_cont, autocomplete_link_streetaddress_links_path, :size => 70, id: 'my_autocomplete_field' %>
+    <%= f.submit class: 'search_submit', id: 'advanced_search' %>
+  </p>
+  <br>
+  
 <% end %>
 
 
-<!= Implements sorting attributes using gem "Ransack" =>
-  <table class="listing1">
-    <thead>
+</div>
+</div>
+</div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+<div id="resultmain">
+<div id="titleoftop">
+  
+
+<h1>Top 5 Apartments</h1>
+</div>
+  <table id="result_table">
+    <thead id="result_head">
       <tr>
-        <th ><%= sort_link @q, :name, "Name" %></th>
-        <th><%= sort_link @q, :address, "Address" %></th>
-        <th>availability</th>
-        <th>like</th>
-        <th>dislike</th>
-        <th colspan="3"></th>
+
+
+        <th id='th1'>
+          <h5>Region</h5>
+        </th>
+        <th id='th2'>
+          <h5>Name</h5>
+        </th>
+        <th id='th3'>
+          <h5>Averageprice</h5>
+        </th>
+        <th id='th4'>
+          <h5>Rates</h5>
+          <!-- <h5><%= sort_link @q, :rates, "Rates"%></h5> -->
+        </th>
+        <th id='th5'>
+          <h5>Comments</h5>
+          <!-- <h5><%= sort_link @q, :comments, "Comments"%></h5>-->
+        </th>
       </tr>
     </thead>
+    <tbody id="result_body">
+      <% @topfive.each do |link| %>
+      <tr class="<%= cycle('oddrow', 'evenrow') -%>" data-link="<%= link_path(link) %>">
+        <td id='td1'><h5><%= link.regionaladdress %></h5></td>
+        <td id='td2'><h4><%= link.name %></h4><p><%= link.streetaddress %></p></td>
+        <td id='td3'><h5><%= link.averageprice %></h5></td>
+        <td id='td4'><p><%= link.get_upvotes.size %></p></td>
+        <td id='td5'><p><%= link.comments.count %><p></td>
 
-    <tbody>
-    <% @links.each do |link| %>
-      <tr>
-        <h2>
-          <td><%= link_to link.name, link %><br></td>
-          <td><%= link_to link.address, link %><br></td>
-          <td><%= link_to link.bedroom, link %><br></td>
-          <td><%= link.get_upvotes.size %></td>
-          <td><%= link.get_downvotes.size %></td>
-        </h2>
       </tr>
+
+      <% end %>
     </tbody>
-
-    
-  <% end %>
   </table>
+</div>
+<script type="text/javascript">
+    var ready;
 
+    ready = function(){
 
+      $('#my_autocomplete_field').bind('railsAutocomplete.select', function(event, data){
+  		/* Do something when choice is clicked */
+  	   });
+
+  
+  // Call Quovolver on the '.quotes' object
+      $('#demo-one .quotes').quovolver();
+  
+
+    $(document).ready(ready);
+    $(document).on('page:load',ready);
+</script>

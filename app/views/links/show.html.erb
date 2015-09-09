@@ -1,70 +1,123 @@
-<p id="notice"><%= notice %></p>
+<!-- <p id="notice"><%= notice %></p> -->
+
+<div class="container" id="showmain">
   
-<h1 class="apt-name"><%= @link.name %></h1>
+  <div id="showinfo" class="col-xs-8">
+    <h1><%= @link.name %></h1>
+    <hr>
+    <p><%= @link.streetaddress %>, <%= @link.regionaladdress %></p>
+    <ul id="showul">
+      <li><p>Built: <%= @link.built %></p></li>
+      <li><p>Suites: <%= @link.suites %></p></li>
+      <li><p>Floors: <%= @link.floors %></p></li>
+    </ul>
 
-<div class="apt-placeholder">
-  <div id="apt-factsheet">
-    <%= button_to "Rate this condo", new_comment_path, :id=> "rate-button", :class => "button", :method => :get  %><br />
+    <table>
+      <tr>
+        <div id="suitestypes">
+          <td><p>Suites Types:</p></td>
+          <td>
+            <ul>
+              <% @link.bedroom.each do | room |%>
+                <li>
+                  <p><%= room %></p>
+                </li>
+              <%end%>
+            </ul>
+          </td>
+        </div>
+        <div id="amentypes">
+          <td><p>Amenities:</p></td>
+          <td>
+            <ul>
+              <% @link.amenities.each do | amen |%>
+                <li>
+                  <p><%= amen %></p>
+                </li>
+              <%end%>
+            </ul>
+          </td>
+        </div>
 
+      </tr>
+    </table>
+    <br><br><br>
     <%= link_to 'Edit', edit_link_path(@link) %> |
-    <%= link_to 'Back', links_path %>
-
-    <div class="btn-group">
-      <%= link_to like_link_path(@link), method: :put, class: "btn btn-default btn-sm" do %>
-      <span class="glyphicon glyphicon-chevron-up"></span>
-      Upvote
-
-      <% end %>
-      <%= link_to dislike_link_path(@link), method: :put, class: "btn btn-default btn-sm" do %>
-      <span class="glyphicon glyphicon-chevron-down">
-      Downvote
-
-      <% end %>
-    </div>
-
-    <p class="apt-attr">
-      <strong>Address:</strong>
-      <%= @link.address %>
-    </p>
-
-    <p class="apt-attr">
-      <strong>Availability:</strong>
-      <%= @link.bedroom %>
-    </p>
-
-    <p class="apt-attr">
-      <strong>Built:</strong>
-      <%= @link.built %>
-    </p>
-
-    <p class="apt-attr">
-      <strong>Floors:</strong>
-      <%= @link.floors %>
-    </p>
-
-    <p class="apt-attr">
-      <strong>Suites:</strong>
-      <%= @link.suites %>
-    </p>
-
-    <p class="apt-attr">
-      <strong>Features:</strong>
-      <%= @link.amenities %>
-    </p>
+    <%= link_to 'Back', result_page_links_path %>
   </div>
-
-  <!-- Google map -->
-  <div id="apt-map">
+  
+  <div id="showmap" class="col-xs-4">
     <%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@link.latitude}%2C#{@link.longitude}" %>
   </div>
 
-  <div id="apt-comments">
-    <h3 class="comments_title">
-      <%= @link.comments.count %> Comments
-    </h3>
+  
+</div>
+<div id="ratingres" class="container">
 
-    <div id="comments">
-      <%= render :partial => @link.comments %>
+  <div class="readonly-star">
+<!-- using the Ratyrate Helper in Views -->
+    <div class="row">
+      <div class="small-2 large-3 columns">
+        
+          <div class="col-xs-2">Cleanliness: <%= rating_for @link, "cleanliness", readOnly: true, disable_after_rate: true, imdb_avg: true %></div>
+          <div class="col-xs-2">Noise Level: <%= rating_for @link, "noise_level", disable_after_rate: true, imdb_avg: true %></div>
+          <div class="col-xs-2">Convenience: <%= rating_for @link, "convenience", disable_after_rate: true, imdb_avg: true %></div>
+          
+          <div class="btn-group" class="col-xs-4">
+            <div id="likebutton" class="col-xs-3">
+              <%= link_to like_link_path(@link), method: :put, class: "btn btn-default btn-sm" do %>
+              <span class="glyphicon glyphicon-chevron-up">
+              Like
+              </span>
+              <% end %>
+            </div>
+
+            <div id="hatebutton" class="col-xs-3">
+              <%= link_to dislike_link_path(@link), method: :put, class: "btn btn-default btn-sm" do %>
+              <span class="glyphicon glyphicon-chevron-down">
+              Dislike
+              </span>
+              <% end %>
+            </div>
+
+      
+      
+          </div>
+        
+      </div>
     </div>
+<!-- end of ratyrate helper view -->
+  </div>
+  <div id="buttoncent">
+    <%= button_to "Rate this apartment", new_link_comment_path(@link), :class => "button", :method => :get  %>
   </div>
 </div>
+
+<div id="commentsarea" class="container">
+  <div>
+  <h4>
+    <%= @link.comments.count %> Comments
+  </h4>
+  <hr>
+ 
+  <p><%= render :partial => @link.comments %></p>
+ 
+
+  </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+ready = function(){
+
+$(".readonly-star .star").each(function() {
+$(this).raty('set', { readOnly: true });
+});
+
+};
+
+$(document).ready(ready);
+$(document).on('page:load',ready);
+</script>
